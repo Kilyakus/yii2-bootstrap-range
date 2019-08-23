@@ -1,0 +1,250 @@
+/*! =======================================================
+                      VERSION  9.2.0              
+========================================================= */
+/*! =========================================================
+ * bootstrap-range.js
+ *
+ * Maintainers:
+ *		Kyle Kemp
+ *			- Twitter: @seiyria
+ *			- Github:  seiyria
+ *		Rohit Kalkur
+ *			- Twitter: @Rovolutionary
+ *			- Github:  rovolution
+ *
+ * =========================================================
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ========================================================= */
+.range {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+}
+.range.range-horizontal {
+  width: 100%;
+  height: 15px;
+}
+.range.range-horizontal .range-track {
+  height: 6px;
+  width: 100%;
+  margin-top: 0px;
+  top: 50%;
+  left: 0;
+}
+/*.range.range-horizontal .range-track:before,
+.range.range-horizontal .range-track:after {content:'';position:absolute;top:-5px;width:1px;height:10px;background-color:#318CE4;}
+.range.range-horizontal .range-track:before {left:0px;}
+.range.range-horizontal .range-track:after {right:0px;}*/
+.range.range-horizontal .range-selection,
+.range.range-horizontal .range-track-low,
+.range.range-horizontal .range-track-high {
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  border-radius:3px;
+}
+.range.range-horizontal .range-tick,
+.range.range-horizontal .range-handle {
+  margin-left: -6px;
+}
+.range.range-horizontal .range-tick.triangle,
+.range.range-horizontal .range-handle.triangle {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 0 10px 10px 10px;
+  width: 0;
+  height: 0;
+  border-bottom-color: #0480be;
+  margin-top: 0;
+}
+.range.range-horizontal .range-tick-container {
+  white-space: nowrap;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.range.range-horizontal .range-tick-label-container {
+  white-space: nowrap;
+  margin-top: 28px;
+}
+.range.range-horizontal .range-tick-label-container .range-tick-label {
+  padding-top: 4px;
+  display: inline-block;
+  text-align: center;
+}
+.range.range-vertical {
+  height: 210px;
+  width: 28px;
+}
+.range.range-vertical .range-track {
+  width: 10px;
+  height: 100%;
+  left: 25%;
+  top: 0;
+}
+.range.range-vertical .range-selection {
+  width: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+.range.range-vertical .range-track-low,
+.range.range-vertical .range-track-high {
+  width: 100%;
+  left: 0;
+  right: 0;
+}
+.range.range-vertical .range-tick,
+.range.range-vertical .range-handle {
+  margin-top: -10px;
+}
+.range.range-vertical .range-tick.triangle,
+.range.range-vertical .range-handle.triangle {
+  border-width: 10px 0 10px 10px;
+  width: 1px;
+  height: 1px;
+  border-left-color: #0480be;
+  margin-left: 0;
+}
+.range.range-vertical .range-tick-label-container {
+  white-space: nowrap;
+}
+.range.range-vertical .range-tick-label-container .range-tick-label {
+  padding-left: 4px;
+}
+.range.range-disabled .range-handle {
+  background-image: -webkit-linear-gradient(top, #dfdfdf 0%, #bebebe 100%);
+  background-image: -o-linear-gradient(top, #dfdfdf 0%, #bebebe 100%);
+  background-image: linear-gradient(to bottom, #dfdfdf 0%, #bebebe 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffdfdfdf', endColorstr='#ffbebebe', GradientType=0);
+}
+.range.range-disabled .range-track {
+  background-image: -webkit-linear-gradient(top, #e5e5e5 0%, #e9e9e9 100%);
+  background-image: -o-linear-gradient(top, #e5e5e5 0%, #e9e9e9 100%);
+  background-image: linear-gradient(to bottom, #e5e5e5 0%, #e9e9e9 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe5e5e5', endColorstr='#ffe9e9e9', GradientType=0);
+  cursor: not-allowed;
+}
+.range input {
+  display: none;
+}
+.range .tooltip.top {
+  margin-top: -36px;
+}
+.range .tooltip-inner {
+  white-space: nowrap;
+  max-width: none;
+}
+.range .hide {
+  display: none;
+}
+.range-track {
+  position: absolute;
+  cursor: pointer;
+}
+.range-selection {
+  position: absolute;
+  box-sizing: border-box;
+  background-color:#318CE4;
+}
+.range-selection.tick-range-selection {
+
+}
+.range-track-low,
+.range-track-high {
+  position: absolute;
+  background: transparent;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: #F0F5FD;
+}
+.range-handle {
+  position: absolute;
+  top: 0;
+  width: 11px;
+  height: 18px;
+  background-color: #318CE4;
+  border: 0px solid transparent;
+  cursor:w-resize;
+}
+.range-handle.round {
+  border-radius: 3px;
+}
+.range-handle.triangle {
+  background: transparent none;
+}
+.range-handle.custom {
+  background: transparent none;
+}
+.range-handle.custom::before {
+  line-height: 28px;
+  font-size: 28px;
+  content: '\2605';
+  color: #726204;
+}
+.range-tick {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background-image: -webkit-linear-gradient(top, #f9f9f9 0%, #f5f5f5 100%);
+  background-image: -o-linear-gradient(top, #f9f9f9 0%, #f5f5f5 100%);
+  background-image: linear-gradient(to bottom, #f9f9f9 0%, #f5f5f5 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff9f9f9', endColorstr='#fff5f5f5', GradientType=0);
+  -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  filter: none;
+  opacity: 0.8;
+  border: 0px solid transparent;
+}
+.range-tick.round {
+  border-radius: 50%;
+}
+.range-tick.triangle {
+  background: transparent none;
+}
+.range-tick.custom {
+  background: transparent none;
+}
+.range-tick.custom::before {
+  line-height: 28px;
+  font-size: 28px;
+  content: '\2605';
+  color: #726204;
+}
+.range-tick.in-selection {
+  background-image: -webkit-linear-gradient(top, #89cdef 0%, #81bfde 100%);
+  background-image: -o-linear-gradient(top, #89cdef 0%, #81bfde 100%);
+  background-image: linear-gradient(to bottom, #89cdef 0%, #81bfde 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff89cdef', endColorstr='#ff81bfde', GradientType=0);
+  opacity: 1;
+}
+
+.range-box {display:flex;}
+.range-box > input {border-radius:0px;margin-right:-1px;}
+.range-box > input:first-child,
+.range-box > div:first-child > input {border-radius:3px 0px 0px 3px;}
+.range-box > input:last-child,
+.range-box > div:last-child > input {margin-right:0px;border-radius:0px 3px 3px 0px;}
+.range-box input:focus,
+.range-box input:active {z-index:1;}
