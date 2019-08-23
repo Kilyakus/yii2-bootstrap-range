@@ -16,7 +16,4 @@ class RangeAsset extends \yii\web\AssetBundle
     public $depends = [
         'yii\web\JqueryAsset'
     ];
-    public $jsOptions = [
-        'position' => \yii\web\View::POS_HEAD
-    ];
 }
