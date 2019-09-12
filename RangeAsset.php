@@ -13,7 +13,4 @@ class RangeAsset extends \yii\web\AssetBundle
     public $js = [
         'js/bootstrap-range.js',
     ];
-    public $depends = [
-        'yii\web\JqueryAsset'
-    ];
 }
