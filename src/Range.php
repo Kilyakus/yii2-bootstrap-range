@@ -12,6 +12,8 @@ class Range extends Widget
 {
     public $model;
 
+    public $attribute;
+    
     public $name;
 
     public $size = 'sm';
