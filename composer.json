@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "kilyakus\\widget\\range\\": ""
+            "kilyakus\\widget\\range\\": "src"
         }
     }
 }
