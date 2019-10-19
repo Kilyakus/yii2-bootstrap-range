@@ -1,5 +1,5 @@
 <?php
-namespace kilyakus\range;
+namespace kilyakus\widget\range;
 
 use Yii;
 use yii\base\Widget;
@@ -12,8 +12,6 @@ class Range extends Widget
 {
     public $model;
 
-    public $attribute;
-
     public $name;
 
     public $size = 'sm';
@@ -23,6 +21,8 @@ class Range extends Widget
     public $min = 'min';
 
     public $max = 'max';
+
+    public $value = [];
 
     public $range = true;
 
@@ -36,30 +36,34 @@ class Range extends Widget
             Yii::$app->session->setFlash('danger', 'Widget' . (new \ReflectionClass(get_class($this)))->getShortName() . ': ' . Yii::t('easyii', "Required `model` param isn\'t set."));
         }
 
-        if (empty($this->attribute)) {
-            Yii::$app->session->setFlash('danger', 'Widget' . (new \ReflectionClass(get_class($this)))->getShortName() . ': ' . Yii::t('easyii', "Required `attribute` param isn\'t set."));
+        if(!$this->value[0]){
+            $this->value[0] = 0;
         }
 
-        if(!$this->model->{$this->min}){
-            $this->model->{$this->min} = 0;
+        if(!$this->value[1]){
+            $this->value[1] = 100000;
         }
 
-        if(!$this->model->{$this->max}){
-            $this->model->{$this->max} = 100000;
+        if(empty($this->model->{$this->min})){
+            $this->model->{$this->min} = $this->value[0];
+        }
+
+        if(empty($this->model->{$this->max})){
+            $this->model->{$this->max} = $this->value[1];
         }
     }
 
     public function run()
     {
-        if (!empty($this->model) && !empty($this->attribute)) {
+        if (!empty($this->model)) {
 
             $className = (new \ReflectionClass(get_class($this->model)))->getShortName();
 
-            $id = Inflector::slug($className) . '-' . Inflector::slug($this->model->{$this->attribute});
+            $id = Inflector::slug($className) . '-' . Inflector::slug($this->model->{$this->min} . '-' . $this->model->{$this->max});
 
             echo Html::beginTag('div',['class' => 'range-box']);
-            echo Html::input('number', ($this->name ? $this->name : $className) . '[min]', $this->model->{$this->min}, ['class' => 'form-control input-'.$this->size, 'min' => $this->model->{$this->min}, 'max' => $this->model->{$this->max}, 'id' => $id . '-from',]);
-            echo Html::input('number', ($this->name ? $this->name : $className) . '[max]', $this->model->{$this->max}, ['class' => 'form-control input-'.$this->size, 'min' => $this->model->{$this->min}, 'max' => $this->model->{$this->max}, 'id' => $id . '-to',]);
+            echo Html::input('number', ($this->name ? $this->name : $className) . '[' . $this->min . ']', $this->model->{$this->min}, ['class' => 'form-control input-'.$this->size, 'min' => $this->value[0], 'max' => $this->value[1], 'id' => $id . '-from',]);
+            echo Html::input('number', ($this->name ? $this->name : $className) . '[' . $this->max . ']', $this->model->{$this->max}, ['class' => 'form-control input-'.$this->size, 'min' => $this->value[0], 'max' => $this->value[1], 'id' => $id . '-to',]);
             echo Html::endTag('div');
             echo Html::tag('div',null,['id' => $id . '-range']);
 
@@ -70,8 +74,8 @@ var from = $('#" . $id . "-from'), to = $('#" . $id . "-to'), range = $('#" . $i
         
 range.range({
     step: " . $this->step . ",
-    min: " . $this->model->{$this->min} . ",
-    max: " . $this->model->{$this->max} . ",
+    min: " . $this->value[0] . ",
+    max: " . $this->value[1] . ",
     value: [" . $this->model->{$this->min} . ", " . $this->model->{$this->max} . "],
     range: " . $this->range . ",
     tooltip: '" . $this->tooltip . "',
