@@ -13,7 +13,7 @@ class Range extends Widget
     public $model;
 
     public $attribute;
-    
+
     public $name;
 
     public $size = 'sm';
@@ -26,7 +26,7 @@ class Range extends Widget
 
     public $value = [];
 
-    public $range = true;
+    public $range = [];
 
     public $tooltip = 'show'; // 'show', 'hide', or 'always'
 
@@ -38,20 +38,20 @@ class Range extends Widget
             Yii::$app->session->setFlash('danger', 'Widget' . (new \ReflectionClass(get_class($this)))->getShortName() . ': ' . Yii::t('easyii', "Required `model` param isn\'t set."));
         }
 
-        if(!$this->value[0]){
-            $this->value[0] = 0;
+        if(!$this->range[0]){
+            $this->range[0] = 0;
         }
 
-        if(!$this->value[1]){
-            $this->value[1] = 100000;
+        if(!$this->range[1]){
+            $this->range[1] = 100000;
         }
 
         if(empty($this->model->{$this->min})){
-            $this->model->{$this->min} = $this->value[0];
+            $this->model->{$this->min} = $this->range[0];
         }
 
         if(empty($this->model->{$this->max})){
-            $this->model->{$this->max} = $this->value[1];
+            $this->model->{$this->max} = $this->range[1];
         }
     }
 
@@ -64,8 +64,8 @@ class Range extends Widget
             $id = Inflector::slug($className) . '-' . Inflector::slug($this->model->{$this->min} . '-' . $this->model->{$this->max});
 
             echo Html::beginTag('div',['class' => 'range-box']);
-            echo Html::input('number', ($this->name ? $this->name : $className) . '[' . $this->min . ']', $this->model->{$this->min}, ['class' => 'form-control input-'.$this->size, 'min' => $this->value[0], 'max' => $this->value[1], 'id' => $id . '-from',]);
-            echo Html::input('number', ($this->name ? $this->name : $className) . '[' . $this->max . ']', $this->model->{$this->max}, ['class' => 'form-control input-'.$this->size, 'min' => $this->value[0], 'max' => $this->value[1], 'id' => $id . '-to',]);
+            echo Html::input('number', ($this->name ? $this->name : $className) . '[' . $this->min . ']', $this->model->{$this->min}, ['class' => 'form-control input-'.$this->size, 'min' => $this->range[0], 'max' => $this->range[1], 'id' => $id . '-from',]);
+            echo Html::input('number', ($this->name ? $this->name : $className) . '[' . $this->max . ']', $this->model->{$this->max}, ['class' => 'form-control input-'.$this->size, 'min' => $this->range[0], 'max' => $this->range[1], 'id' => $id . '-to',]);
             echo Html::endTag('div');
             echo Html::tag('div',null,['id' => $id . '-range']);
 
@@ -76,10 +76,10 @@ var from = $('#" . $id . "-from'), to = $('#" . $id . "-to'), range = $('#" . $i
         
 range.range({
     step: " . $this->step . ",
-    min: " . $this->value[0] . ",
-    max: " . $this->value[1] . ",
+    min: " . $this->range[0] . ",
+    max: " . $this->range[1] . ",
     value: [" . $this->model->{$this->min} . ", " . $this->model->{$this->max} . "],
-    range: " . $this->range . ",
+    range: true,
     tooltip: '" . $this->tooltip . "',
     tooltip_split: true,
     tooltip_position: 'bottom'
