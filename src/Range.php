@@ -34,24 +34,38 @@ class Range extends Widget
     {
         parent::init();
 
-        if (empty($this->model)) {
+        if (empty($this->model))
+        {
             Yii::$app->session->setFlash('danger', 'Widget' . (new \ReflectionClass(get_class($this)))->getShortName() . ': ' . Yii::t('easyii', "Required `model` param isn\'t set."));
         }
 
-        if(!$this->range[0]){
+        if(!$this->range[0])
+        {
             $this->range[0] = 0;
         }
 
-        if(!$this->range[1]){
+        if(!$this->range[1])
+        {
             $this->range[1] = 100000;
         }
 
-        if(empty($this->model->{$this->min})){
-            $this->model->{$this->min} = $this->range[0];
-        }
+        if(!$this->value[0] || !$this->value[0]){
 
-        if(empty($this->model->{$this->max})){
-            $this->model->{$this->max} = $this->range[1];
+            if(empty($this->model->{$this->min}))
+            {
+                $this->model->{$this->min} = $this->range[0];
+            }
+
+            if(empty($this->model->{$this->max}))
+            {
+                $this->model->{$this->max} = $this->range[1];
+            }
+
+        }else{
+
+            $this->model->{$this->min} = $this->value[0];
+            $this->model->{$this->max} = $this->value[1];
+
         }
     }
 

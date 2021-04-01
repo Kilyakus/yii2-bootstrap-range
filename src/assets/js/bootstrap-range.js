@@ -1001,9 +1001,11 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 			},
 			_hideTooltip: function _hideTooltip() {
 				if (this._state.inDrag === false && this.alwaysShowTooltip !== true) {
-					// this._removeClass(this.tooltip, 'in');
-					// this._removeClass(this.tooltip_min, 'in');
-					// this._removeClass(this.tooltip_max, 'in');
+					setTimeout(function(){
+						this._removeClass(this.tooltip, 'in');
+						this._removeClass(this.tooltip_min, 'in');
+						this._removeClass(this.tooltip_max, 'in');
+					}.bind(this), 800);
 				}
 				this._state.over = false;
 			},
@@ -1441,7 +1443,7 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 
 				this._state.inDrag = false;
 				if (this._state.over === false) {
-					this._hideTooltip();
+					// this._hideTooltip();
 				}
 				var val = this._calculateValue(true);
 
